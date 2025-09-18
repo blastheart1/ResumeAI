@@ -1,7 +1,7 @@
 // server/server.js
 const express = require("express");
 const cors = require("cors");
-const OpenAI = require("openai").default; // CommonJS requires .default
+const OpenAI = require("openai").default; 
 require("dotenv").config();
 
 const app = express();
@@ -40,13 +40,20 @@ app.post("/api/openai-analysis", async (req, res) => {
           "Critical": ["Skill with 1–2 lines of context why it’s critical"],
           "Important": ["Skill with 1–2 lines of context why it’s important"],
           "Nice-to-Have": ["Skill with 1–2 lines of context why it’s beneficial but not required"]
-        }
+        },
+        "jobRecommendations": [
+          {
+            "title": "Role Name",
+            "description": "Why this role fits the candidate"
+          }
+        ]
       }
 
       Rules:
-      - Always fill all three categories, even if one is empty.
-      - Each skill should have a short description, not just the name.
-      - Keep descriptions concise but informative.
+      - Always fill all categories, even if some are empty.
+      - Provide at least 3 job recommendations with a short justification.
+      - Keep all descriptions concise, clear, and actionable.
+      - Include context for each skill in grouped categories.
     `;
 
     console.log("Sending request to OpenAI...");
@@ -67,25 +74,20 @@ app.post("/api/openai-analysis", async (req, res) => {
       parsed = {
         insight: completion.choices?.[0]?.message?.content || "No insight generated",
         recommendations: [],
-        grouped: {
-          Critical: [],
-          Important: [],
-          "Nice-to-Have": []
-        },
+        grouped: { Critical: [], Important: [], "Nice-to-Have": [] },
+        jobRecommendations: []
       };
     }
 
     res.json({
       insight: parsed.insight || "No insight generated",
       recommendations: parsed.recommendations || [],
-      grouped: parsed.grouped || {
-        Critical: [],
-        Important: [],
-        "Nice-to-Have": []
-      },
+      grouped: parsed.grouped || { Critical: [], Important: [], "Nice-to-Have": [] },
+      jobRecommendations: parsed.jobRecommendations || []
     });
 
     console.log("Response sent to frontend:", parsed);
+
   } catch (err) {
     console.error("OpenAI API error:", err);
     res.status(500).json({ error: "OpenAI request failed" });
