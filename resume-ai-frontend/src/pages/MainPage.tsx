@@ -1,12 +1,12 @@
 import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { Sun, Moon } from "lucide-react";
-import { Button } from "../components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
-import ResumeUploader from "../components/ResumeUploader";
-import JobDescriptionInput from "../components/JobDescriptionInput";
-import SuggestionsPanel, { AIAnalysis } from "../components/SuggestionsPanel";
-import StarBackground from "../components/StarBackground";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import ResumeUploader from "@/components/ResumeUploader";
+import JobDescriptionInput from "@/components/JobDescriptionInput";
+import SuggestionsPanel, { AIAnalysis } from "@/components/SuggestionsPanel";
+import StarBackground from "@/components/StarBackground";
 import { analyzeResume, SuggestionItem } from "../lib/api";
 
 const MainPage: React.FC = () => {
