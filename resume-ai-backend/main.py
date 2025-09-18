@@ -15,6 +15,8 @@ origins = [
     "http://localhost:5173",  # Vite
     "http://localhost:3000",  # CRA
     "http://127.0.0.1:5173",
+    "https://resume-ai-frontend-glu1z3wr1-blastheart1s-projects.vercel.app",
+    "https://resume-ai-frontend-orpin.vercel.app/",
 ]
 app.add_middleware(
     CORSMiddleware,
