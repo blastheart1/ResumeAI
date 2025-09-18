@@ -54,14 +54,16 @@ const MainPage: React.FC = () => {
 
     console.log("Triggering AI analysis...");
     try {
-      const response = await fetch("http://localhost:3001/api/openai-analysis", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          matched: suggestions.flatMap((s) => s.items?.matched ?? []),
-          missing: suggestions.flatMap((s) => s.items?.missing ?? []),
-        }),
-      });
+      const API_BASE_URL = "https://resumeai-ahz1.onrender.com";
+
+const response = await fetch(`${API_BASE_URL}/api/openai-analysis`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    matched: suggestions.flatMap((s) => s.items?.matched ?? []),
+    missing: suggestions.flatMap((s) => s.items?.missing ?? []),
+  }),
+});
       console.log("OpenAI API response status:", response.status);
       const data = await response.json();
       console.log("AI analysis data:", data);
