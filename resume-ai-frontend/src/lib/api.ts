@@ -1,9 +1,14 @@
 // src/lib/api.ts
+export interface SuggestionItems {
+  matched: string[];
+  missing: string[];
+}
+
 export interface SuggestionItem {
   category: string;
   title: string;
   score: number;
-  items?: Record<string, string[]>; // old free-mode matched/missing
+  items?: SuggestionItems | null; // matched/missing
   message: string;
 
   // AI-enhanced optional fields
@@ -17,6 +22,8 @@ export interface ApiResponse {
   suggestions: SuggestionItem[];
 }
 
+const API_BASE_URL = "https://resumeai-fastapi.onrender.com";
+
 export async function analyzeResume(
   resumeFile: File,
   jobDescription: string
@@ -26,7 +33,7 @@ export async function analyzeResume(
     formData.append("resume", resumeFile);
     formData.append("job_description", jobDescription);
 
-    const response = await fetch("http://localhost:8000/analyze", {
+    const response = await fetch(`${API_BASE_URL}/analyze`, {
       method: "POST",
       body: formData,
     });
@@ -36,7 +43,16 @@ export async function analyzeResume(
       return null;
     }
 
-    return await response.json();
+    const data: ApiResponse = await response.json();
+
+    // Ensure items arrays exist
+    data.suggestions.forEach((s) => {
+      if (!s.items) {
+        s.items = { matched: [], missing: [] };
+      }
+    });
+
+    return data;
   } catch (error) {
     console.error("Network error:", error);
     return null;
