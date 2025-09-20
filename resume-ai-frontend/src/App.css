@@ -1,3 +1,4 @@
+/* ---------------- Base Layout ---------------- */
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -11,9 +12,11 @@
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
@@ -39,4 +42,74 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* ---------------- Modal / SuggestionsPanel ---------------- */
+.suggestions-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.suggestions-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+}
+
+.suggestions-modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 768px;
+  max-height: 90vh; /* Ensure modal fits screen */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth scroll on iOS */
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 1rem;
+  border: 1px solid #e2e8f0;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* ---------------- Hide scrollbar (mobile) ---------------- */
+@media (max-width: 768px) {
+  .suggestions-modal-content::-webkit-scrollbar {
+    display: none;
+  }
+
+  .suggestions-modal-content {
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
+/* ---------------- Close Button ---------------- */
+.modal-close-button {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* ---------------- Typography & Panels ---------------- */
+.text-left {
+  text-align: left;
+}
+
+.font-bold {
+  font-weight: 600;
+}
+
+.font-semibold {
+  font-weight: 500;
+}
+
+.text-sm {
+  font-size: 0.875rem;
 }
